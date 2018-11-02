@@ -48,6 +48,7 @@
     file
     git
     pwgen
+    rxvt
     tmux
     vim
     wget
@@ -96,8 +97,10 @@
   # services.xserver.desktopManager.plasma5.enable = true;
 
   services.xserver = {
-    # displayManager.sddm.enable = true;
+    enable = true;
     libinput.enable = true;
+    layout = "de";
+    # displayManager.sddm.enable = true;
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
