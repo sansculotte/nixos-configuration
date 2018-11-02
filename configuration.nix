@@ -44,6 +44,8 @@
   environment.systemPackages = with pkgs; [
     coreutils
     curl
+    dmenu
+    docker
     lsof
     file
     git
@@ -58,7 +60,12 @@
     inkscape
     keepassx2
     networkmanagerapplet
-    
+
+    haskellPackages.ghc
+    haskellPackages.xmonad
+    haskellPackages.xmonad-contrib
+    haskellPackages.xmonad-extras
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
