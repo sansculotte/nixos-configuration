@@ -46,15 +46,22 @@
     curl
     dmenu
     docker
+    dzen2
     lsof
     file
     git
+    htop
+    lm_sensors
+    mplayer
     pwgen
-    rxvt
+    rxvt_unicode
+    slock
     tmux
-    vim
+    vim_configurable
+    vlc
     wget
     wpa_supplicant_gui
+    zathura
 
     gimp
     inkscape
@@ -68,6 +75,9 @@
 
   ];
 
+
+  programs.bash.enableCompletion = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -77,6 +87,9 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.locate.enable = true;
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -131,6 +144,10 @@
   # servers. You should change this only after NixOS release notes say you
   # should.
   system.stateVersion = "18.09"; # Did you read the comment?
+
+  # enabvle docker service and allow access for ub
+  virtualisation.docker.enable = true;
+  users.users.ub.extraGroups = [ "docker" ];
 
   nixpkgs = {
     config = {
