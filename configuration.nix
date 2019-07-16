@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+#      ./vim.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -24,6 +25,9 @@
 
   networking.hostName = "constant"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.extraHosts = ''
+    192.168.1.50 klee
+  '';
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -31,28 +35,41 @@
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
+    consoleFont = "ProggyClean";
     consoleKeyMap = "de";
-    defaultLocale = "de_DE.UTF-8";
+    defaultLocale = "en_EN.UTF-8";
   };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
+  fileSystems."/mnt/klee" = {
+    device = "klee:/media/shares";
+    fsType = "nfs";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    binutils-unwrapped
     coreutils
     curl
+    cmake
     dmenu
     docker
+    docker_compose
     dzen2
     lsof
     file
+    gcc
     git
+    gnutls
+    gnumake
+    gnupg
     htop
     lm_sensors
     mplayer
+    openssl
     pwgen
     rxvt_unicode
     slock
@@ -67,6 +84,7 @@
     inkscape
     keepassx2
     networkmanagerapplet
+    thunderbird
 
     haskellPackages.ghc
     haskellPackages.xmonad
@@ -75,18 +93,33 @@
 
   ];
 
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts
+    dina-font
+    proggyfonts
+    screen
+  ];
 
   programs.bash.enableCompletion = true;
+  programs.slock.enable = true;
+  programs.ssh.startAgent = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.mtr.enable = true;
+  #programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  #services.openssh.passwordAuthentication = false;
 
   services.locate.enable = true;
 
@@ -95,7 +128,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
