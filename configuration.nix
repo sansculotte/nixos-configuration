@@ -28,6 +28,7 @@
   networking.extraHosts = ''
     192.168.1.50 klee
   '';
+  networking.nameservers = [ "1.1.1.1" "192.168.1.1" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
